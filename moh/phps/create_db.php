@@ -130,16 +130,13 @@ else
 ///////////////////////////////////////////////////////////////////////////////////
 
 $create_table_statement="CREATE TABLE if not exists tbl_article(
-    serial_no bigint,
-    PRIMARY KEY(serial_no),
-    file_no bigint,
-	article_date Date,
-	article_time Datetime,
+    article_no bigint,
+    PRIMARY KEY(article_no),
+	article_date date,
+	article_type varchar(100),
 	article_subject varchar(1000),
-	article_disposal varchar(1000),
-	FOREIGN KEY (file_no) REFERENCES tbl_file(file_no)
-	
-	
+	article_sender varchar(1000),
+	article_receiver varchar(1000)
 ) ENGINE=INNODB;";
 
 $result=$conn->query($create_table_statement);

@@ -1,6 +1,6 @@
 <?php
 // Include config file
-require_once "config.php";
+require_once "config_main.php";
  
 // Define variables and initialize with empty values
 $department_id = $department_name = $input_description = "";
@@ -14,9 +14,9 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     if(empty($input_department_id)){
         $department_id_err = "Please enter department id.";     
     } 
-	//elseif(!filter_var($input_department_id, FILTER_VALIDATE_REGEXP, array("options"=>array("regexp"=>"/^[a-zA-Z\s]+$/")))){
-      //  $department_id_err = "Please enter a valid id.";
-	//}
+	elseif(!is_numeric($input_department_id)){
+        $department_id_err = "Please enter a numeric id for department.";
+	}
 	else{
         $department_id = $input_department_id;
     }
@@ -83,14 +83,14 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     </style>
 </head>
 <body>
-    <div class="wrapper">
+    <div class="wrapper" style="background-color: MediumSeaGreen;>
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-12">
                     <div class="page-header">
-                        <h2>Create Record</h2>
+                        <h2 align="center">Add New Department</h2>
                     </div>
-                    <p>Please fill this form and submit to add Department record to the database.</p>
+                    <p align="center">Please fill this form and submit to add Department record to the database.</p>
                     <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
                        <div class="form-group <?php echo (!empty($department_id_err)) ? 'has-error' : ''; ?>"> 
                             <label>Department id</label>
@@ -108,9 +108,10 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                             <span class="help-block"></span>							
                         </div>
 						
-					
+                        <div align="center">
                         <input type="submit" class="btn btn-primary" value="Submit">
-                        <a href="department_index.php" class="btn btn-default">Back to Index</a>
+                        <a href="..\index.php?loggedin=true" class="btn btn-primary">Back to Index</a>
+    </div>
 						<div class="form-group"	>
 							<?php echo $query_error;?>
 						

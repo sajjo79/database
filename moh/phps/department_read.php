@@ -3,7 +3,7 @@
 $row="";
 if(isset($_GET["department_id"]) && !empty(trim($_GET["department_id"]))){
     // Include config file
-    require_once "config.php";
+    require_once "config_main.php";
     
     // Prepare a select statement
 	$department_id=$_GET["department_id"];
@@ -30,7 +30,7 @@ if(isset($_GET["department_id"]) && !empty(trim($_GET["department_id"]))){
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>View Record</title>
+    <title>View Department</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.css">
     <style type="text/css">
         .wrapper{
@@ -45,10 +45,10 @@ if(isset($_GET["department_id"]) && !empty(trim($_GET["department_id"]))){
             <div class="row">
                 <div class="col-md-12">
                     <div class="page-header">
-                        <h1>View Record</h1>
+                        <h1>View Department</h1>
                     </div>
 					<div class="form-group">
-                        <label>id</label>
+                        <label>Department id</label>
                         <p class="form-control-static"><?php echo $row["department_id"]; ?></p>
                     </div>
                     <div class="form-group">
@@ -60,7 +60,7 @@ if(isset($_GET["department_id"]) && !empty(trim($_GET["department_id"]))){
                         <p class="form-control-static"><?php echo $row["description"]; ?></p>
                     </div>
 					
-                    <p><a href="department_index.php" class="btn btn-primary">Back</a></p>
+                    <p><a href="..\index.php?loggedin=true" class="btn btn-primary">Back</a></p>
                 </div>
             </div>        
         </div>

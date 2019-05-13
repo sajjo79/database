@@ -1,10 +1,10 @@
 <?php
 // Include config file
-require_once "config.php";
+require_once "config_main.php";
  
 // Define variables and initialize with empty values
-$serial_no = $file_no = $article_date = $article_time = $article_subject = $article_disposal = "";
-$serial_no_err = $file_no_err = $article_date_err = $article_time_err = $article_subject_err = $article_disposal_err = "";
+$article_no = $article_type = $article_date =  $article_subject = $article_sender = $article_receiver= "";
+$article_no_err = $article_type_err = $article_date_err =  $article_subject_err = $article_sender_err =$article_receiver_err = "";
 $query_error = "";
 // Processing form data when form is submitted
 if($_SERVER["REQUEST_METHOD"] == "POST"){
@@ -22,17 +22,15 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     }
 	
     // Validate file_no
-    $input_file_no = trim($_POST["file_no"]);
+    $article_type = trim($_POST["article_type"]);
 	
-    if(empty($input_file_no)){
-        $file_no_err = "Please enter a file no.";
+    if(empty($article_type)){
+        $article_type_err = "Please select article type.";
     }
 	//elseif(!filter_var($input_file_no, FILTER_VALIDATE_REGEXP, array("options"=>array("regexp"=>"/^[a-zA-Z\s]+$/")))){
        // $file_no_err = "Please enter a valid file no.";
     //}
-	else{
-        $file_no = $input_file_no;
-    }
+
 	
 	// Validate article_date
 	$input_article_date = trim($_POST["article_date"]);
@@ -46,20 +44,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 	else{
         $article_date = $input_article_date;
     }
-	
-	// Validate article_time
-	$input_article_time = trim($_POST["article_time"]);
-	
-	if(empty($input_article_time)){
-        $article_date_err = "Please enter a article time.";
-    }
-	//elseif(!filter_var($input_article_time, FILTER_VALIDATE_REGEXP, array("options"=>array("regexp"=>"/^[a-zA-Z\s]+$/")))){
-       // $article_time_err = "Please enter a valid article date time .";
-    //}
-	else{
-        $article_date = $input_article_date;
-    }
-	
+		
 	// Validate article_subject
 	$input_article_subject = trim($_POST["article_subject"]);
 	
@@ -73,21 +58,15 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         $article_subject = $input_article_subject;
     }
 	 
-	 // Validate article_disposal
-	$input_article_disposal = trim($_POST["article_disposal"]);
-	
-	if(empty($input_article_disposal)){
-        $article_disposal_err = "Please enter a article disposal.";
-    }
-	//elseif(!filter_var($input_article_disposal, FILTER_VALIDATE_REGEXP, array("options"=>array("regexp"=>"/^[a-zA-Z\s]+$/")))){
-       // $article_disposal_err = "Please enter a valid article disposal .";
-    //}
-	else{
-        $article_disposal = $input_article_disposal;
-    }
-	
-	
-	
+	 // Validate article_sender
+	$input_article_sender = trim($_POST["article_sender"]);
+	if(empty($input_article_sender)){  $article_sender_err = "Please enter a article sender.";   }
+	else {    $article_sender = $input_article_sender;   }
+    
+     // Validate article_receiver
+	$input_article_receiver = trim($_POST["article_receiver"]);
+	if(empty($input_article_receiver)){  $article_receiver_err = "Please enter a article receiver.";   }
+	else {    $article_receiver = $input_article_receiver;   }
 	
 	
     // Check input errors before inserting in database
@@ -95,13 +74,14 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 	    empty($department_id_err) &&
 		empty($file_no_err)	&&
 		empty($article_date_err) &&
-		empty($article_time_err) &&
-		empty($article_subject_err)	&&
-		empty($article_disposal_err) 
+		empty($article_type_err) &&
+        empty($article_subject_err)	&&
+        empty($article_sender_err)	&&
+		empty($article_receiver_err) 
 		){
          //Prepare an insert statement
-        $sql = "INSERT INTO article (serial_no, file_no, article_date, article_time, article_subject, article_disposal) 
-		VALUES (".$serial_no.",'".$file_no."','".$article_date."','".$article_time."','".$article_subject."','".$article_disposal."')";
+        $sql = "INSERT INTO article (article_no, article_date, article_type, article_subject, article_sender, article_receiver) 
+		VALUES (".$article_no.",'".$article_date."','".$article_type."','".$article_subject."','".$article_sender."','".$article_receiver."')";
         
 		// $conn->query($sql);
             if($res=$conn->query($sql)){
@@ -125,7 +105,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Create Record</title>
+    <title>Create New Article</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.css">
     <style type="text/css">
         .wrapper{
@@ -140,45 +120,74 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             <div class="row">
                 <div class="col-md-12">
                     <div class="page-header">
-                        <h2>Create Record</h2>
+                        <h2>Create New Article</h2>
                     </div>
-                    <p>Please fill this form and submit to add Department record to the database.</p>
+                    <p>Please fill the following form to create new article</p>
                     <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
-                       <div class="form-group <?php echo (!empty($serial_no_err)) ? 'has-error' : ''; ?>"> 
-                            <label>Serial No</label>
-                            <input type="text" name="serial_no" class="form-control" value="<?php echo $serial_no; ?>">
-                            <span class="help-block"><?php echo $serial_no_err;?></span>
+                       <div class="form-group" <?php echo (!empty($article_no_err)) ? 'has-error' : ''; ?>"> 
+                            <label>Article No</label>
+                            <input type="text" name="article_no" class="form-control" value="<?php echo $article_no; ?>">
+                            <span class="help-block"><?php echo $article_no_err;?></span>
                         </div>
-					   <div class="form-group <?php echo (!empty($file_no_err)) ? 'has-error' : ''; ?>"> 
-                            <label>File No</label>
-                            <input type="text" name="file_no" class="form-control" value="<?php echo $file_no; ?>">
-                            <span class="help-block"><?php echo $file_no_err;?></span>
+					   <div class="form-group" <?php echo (!empty($article_type_err)) ? 'has-error' : ''; ?>"> 
+                            <label>Article Type</label>
+                            <select name='articletype' class="form-control" value="<?php echo $article_type; ?>">
+							    <option value="Application"> Applicaiton</option>
+								<option value="LetterResponse"> Letter Response </option>
+								<option value="InformationRequested"> Information Requested</option>
+                                </select>
+                            <span class="help-block"><?php echo $article_type_err;?></span>
                         </div>
-						<div class="form-group <?php echo (!empty($article_date_err)) ? 'has-error' : ''; ?>"> 
+						<div class="form-group" <?php echo (!empty($article_date_err)) ? 'has-error' : ''; ?>"> 
                             <label>Article Date</label>
                             <input type="date" name="article_date" class="form-control" value="<?php echo $article_date; ?>">
                             <span class="help-block"><?php echo $article_date_err;?></span>
                         </div>
-						<div class="form-group <?php echo (!empty($article_time_err)) ? 'has-error' : ''; ?>"> 
-                            <label>Article Time </label>
-                            <input type="text" name="article_time" class="form-control" value="<?php echo $article_time; ?>">
-                            <span class="help-block"><?php echo $article_time_err;?></span>
-                        </div>
-						<div class="form-group <?php echo (!empty($article_subject_err)) ? 'has-error' : ''; ?>"> 
+						<div class="form-group" <?php echo (!empty($article_subject_err)) ? 'has-error' : ''; ?>"> 
                             <label>Article Subject</label>
                             <input type="text" name="article_subject" class="form-control" value="<?php echo $article_subject; ?>">
                             <span class="help-block"><?php echo $article_subject_err;?></span>
                         </div>
-						<div class="form-group <?php echo (!empty($article_disposal_err)) ? 'has-error' : ''; ?>"> 
-                            <label>Article Disposal</label>
-                            <input type="text" name="article_disposal" class="form-control" value="<?php echo $article_disposal; ?>">
-                            <span class="help-block"><?php echo $article_disposal_err;?></span>
+                        <div class="form-group" <?php echo (!empty($article_sender_err)) ? 'has-error' : ''; ?>"> 
+                            <label>Sender</label>
+                            <select name='article_sender' class="form-control <?php echo (!empty($article_sender_err)) ? 'has-error' : ''; ?>">
+							<?php
+							$sql="select person_id from employee";
+							$res=$conn->query($sql);
+						     if ($res->num_rows > 0){			
+							
+							while ($row=$res->fetch_assoc())
+							{
+								?>
+								<option value="<?php echo $row['person_id'];?>"><?php echo $row['person_id'];?></option>
+							 <?php }
+							 }else
+								 echo "no rows found".$conn->error;
+							 ?>
+							</select>
+                            <span class="help-block"><?php echo $article_sender_err;?></span>
                         </div>
-						
-						
-					
+                        <div class="form-group" <?php echo (!empty($article_receiver_err)) ? 'has-error' : ''; ?>"> 
+                            <label>Reveiver</label>
+                            <select name='article_sender' class="form-control <?php echo (!empty($article_sender_err)) ? 'has-error' : ''; ?>">
+							<?php
+							$sql="select person_id from employee";
+							$res=$conn->query($sql);
+						     if ($res->num_rows > 0){			
+							
+							while ($row=$res->fetch_assoc())
+							{
+								?>
+								<option value="<?php echo $row['person_id'];?>"><?php echo $row['person_id'];?></option>
+							 <?php }
+							 }else
+								 echo "no rows found".$conn->error;
+							 ?>
+							</select>
+                            <span class="help-block"><?php echo $article_receiver_err;?></span>
+                        </div>	
                         <input type="submit" class="btn btn-primary" value="Submit">
-                        <a href="article_index.php" class="btn btn-default">Back to Index</a>
+                        <a href="..\index.php?loggedin=true" class="btn btn-primary">Back to Main</a>
 						<div class="form-group"	>
 							<?php echo $query_error;?>
 						

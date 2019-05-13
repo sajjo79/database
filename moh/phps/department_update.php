@@ -1,6 +1,6 @@
 <?php
 // Include config file
-require_once "config.php";
+require_once "config_main.php";
 
 if(isset($_POST["department_id"]) && !empty(trim($_POST["department_id"])))
 {
@@ -16,11 +16,11 @@ if(isset($_POST["department_id"]) && !empty(trim($_POST["department_id"])))
     if($conn->query($sql)==TRUE)
 		{			
 			//echo $sql;
-                //header("location: department_index.php");
+                header("location: department_index.php");
                 //exit();
         } 
 		else{
-                echo "Something went wrong. Please try again later.";
+                echo "Something went wrong. Please try again later.".$conn->error;
             }
       
     
@@ -50,7 +50,7 @@ elseif(isset($_GET["department_id"]) && !empty(trim($_GET["department_id"]))){
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Update Record</title>
+    <title>Update Department</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.css">
     <style type="text/css">
         .wrapper{
@@ -65,7 +65,7 @@ elseif(isset($_GET["department_id"]) && !empty(trim($_GET["department_id"]))){
             <div class="row">
                 <div class="col-md-12">
                     <div class="page-header">
-                        <h2>Update Record</h2>
+                        <h2>Update Department </h2>
                     </div>
                     <p>Please edit the input values and submit to update the record.</p>
                     <form action="<?php echo htmlspecialchars(basename($_SERVER['REQUEST_URI'])); ?>" method="post">
@@ -85,7 +85,7 @@ elseif(isset($_GET["department_id"]) && !empty(trim($_GET["department_id"]))){
                         </div>							
                         </div>
                         <input type="submit" class="btn btn-primary" value="Submit">
-                        <a href="department_index.php" class="btn btn-default">Cancel</a>
+                        <a href="department_index.php" class="btn btn-primary">Cancel</a>
                     </form>
                 </div>
             </div>        

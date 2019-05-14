@@ -1,8 +1,12 @@
 <?php
-if($_SERVER["REQUEST_METHOD"] == "GET"){
-  if(!empty($_REQUEST))
-   {$loggedin = trim($_REQUEST["loggedin"]);}
+session_start();
+$loggedin="";
+if(isset($_SESSION['logged'])&& $_SESSION['logged']='yes')
+{
+  $loggedin=$_SESSION['logged'];
 }
+
+
  ?>
 <!DOCTYPE html>
 <head>
@@ -15,31 +19,37 @@ if($_SERVER["REQUEST_METHOD"] == "GET"){
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 <script src="scripts\includehtm.js"></script>
 <script language="javascript">
-function CheckLogin() {
+function CheckLogin(modestr) {
      
      username=document.getElementById("username").value;
      password=document.getElementById("password").value;
-         
+     mode=modestr;
      var xmlhttp = new XMLHttpRequest();
      xmlhttp.onreadystatechange = function() {
        if (this.readyState == 4 && this.status == 200) {
          var resp_text=this.responseText;
-         if(resp_text=='success')
+         //alert(resp_text);
+         if(resp_text=='loggedin')
          {
           document.getElementById("loginform").style.visibility="hidden";
           document.getElementById("mainmenu").style.visibility="visible";
-
-         //document.getElementById("password").style.visibility="hidden";
-         //window.location="http://www.yahoo.com";
+          document.getElementById("logoutform").style.visibility="visible";
+         }
+         if(resp_text=='loggedout')
+         {
+          document.getElementById("loginform").style.visibility="visible";
+          document.getElementById("mainmenu").style.visibility="hidden";
+          document.getElementById("logoutform").style.visibility="hidden";
          }
          else
         document.getElementById("login_err").style.visibility=resp_text;
          
        }
      };
-     xmlhttp.open("GET", "phps/login.php?username=" + username+";password="+password, true);
+     xmlhttp.open("GET", "phps/login.php?username=" + username+"&password="+password+"&mode="+mode, true);
      xmlhttp.send();
    }
+   
 </script>
 </head>
 <body>
@@ -78,8 +88,19 @@ function CheckLogin() {
                 </div>
                 <div style="padding:10;"> 
                     <label>.</label>
-                    <button type="button" onclick="CheckLogin()" class="btn btn-primary">Login</button> 
+                    <button type="button" onclick="CheckLogin('login')" class="btn btn-primary">Login</button> 
                     <span class="help-block" id="login_err">login error is here</span>
+                </div>
+                
+            </form>
+          </div>
+          <div  align="center">
+            <form class="form-inline"  action="logout.php" method="POST" id="logoutform">
+                
+                <div style="padding:10;"> 
+                    <label>.</label>
+                    <button type="button" onclick="CheckLogin('logout')" class="btn btn-primary">Logout</button> 
+                    <span class="help-block" id="logout_err">logout error is here</span>
                 </div>
                 
             </form>
@@ -87,7 +108,8 @@ function CheckLogin() {
         <div align="center"><img src="images/filetracking.png" height="40%" width="40%"></div>
         <script> includeHTML(); </script>
           <?php 
-            if ($loggedin==true){
+          echo "done".$loggedin;
+            if ($loggedin=="yes"){
           ?>
             <script language="javascript">
               document.getElementById("loginform").style.visibility="hidden";

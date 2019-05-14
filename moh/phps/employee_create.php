@@ -359,7 +359,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                         <tr>
                             <td></td>
                         <td><input type="submit" class="btn btn-primary" value="Submit" width="50%">
-                        <a href="..\index.php?loggedin=true" class="btn btn-primary" width="50%">Back to Main</a></td>
+                        <a href="..\index.php" class="btn btn-primary" width="50%">Back to Main</a></td>
                             </tr>
                             </table>
                     </form>

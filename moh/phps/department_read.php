@@ -60,7 +60,7 @@ if(isset($_GET["department_id"]) && !empty(trim($_GET["department_id"]))){
                         <p class="form-control-static"><?php echo $row["description"]; ?></p>
                     </div>
 					
-                    <p><a href="..\index.php?loggedin=true" class="btn btn-primary">Back</a></p>
+                    <p><a href="..\index.php" class="btn btn-primary">Back</a></p>
                 </div>
             </div>        
         </div>

@@ -32,7 +32,7 @@
                     <div class="page-header clearfix">
                         <h2 class="pull-left">Employee Details</h2>
                         <a href="employee_create.php" class="btn btn-success pull-right">Add New Entity</a>
-                        <a href="../index.php?loggedin=true" class="btn btn-success pull-right">Back to Main</a>
+                        <a href="../index.php" class="btn btn-success pull-right">Back to Main</a>
                     </div>
                     <?php
                     // Include config file

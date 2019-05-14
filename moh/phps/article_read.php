@@ -1,22 +1,21 @@
 <?php
 // Check existence of id parameter before processing further
 $row="";
-if(isset($_GET["serial_no"]) && !empty(trim($_GET["serial_no"]))){
+if(isset($_GET["article_no"]) && !empty(trim($_GET["article_no"]))){
     // Include config file
-    require_once "config.php";
+    require_once "config_main.php";
     
     // Prepare a select statement
-	$serial_no=$_GET["serial_no"];
-    $sql = "SELECT * FROM article WHERE serial_no = ".$serial_no;
+	$article_no=$_GET["article_no"];
+    $sql = "SELECT * FROM article WHERE article_no = ".$article_no;
     $res=$conn->query($sql);
 	$row = $res->fetch_assoc();
     if($res->num_rows == 1){
-		        $serial_no = $row["serial_no"];
-                $file_no = $row["file_no"];
+		        $article_no = $row["article_no"];
 				$article_date = $row["article_date"];
-				$article_time = $row["article_time"];
 				$article_subject = $row["article_subject"];
-				$article_disposal = $row["article_disposal"]
+                $article_sender = $row["article_sender"];
+                $article_receiver = $row["article_receiver"];
             } else{
                 // URL doesn't contain valid id parameter. Redirect to error page
                 header("location: article_error.php");
@@ -52,27 +51,23 @@ if(isset($_GET["serial_no"]) && !empty(trim($_GET["serial_no"]))){
                     </div>
 					<div class="form-group">
                         <label>Serial No</label>
-                        <p class="form-control-static"><?php echo $row["serial_no"]; ?></p>
+                        <p class="form-control-static"><?php echo $row["article_no"]; ?></p>
+                    </div>
+					<div class="form-group">
+                        <label>Article Date</label>
+                        <p class="form-control-static"><?php echo $row["article_date"]; ?></p>
+                    </div>
+					<div class="form-group">
+                        <label>Article type</label>
+                        <p class="form-control-static"><?php echo $row["article_type"]; ?></p>
+                    </div>
+					<div class="form-group">
+                        <label>Article Sender</label>
+                        <p class="form-control-static"><?php echo $row["article_sender"]; ?></p>
                     </div>
                     <div class="form-group">
-                        <label>File No</label>
-                        <p class="form-control-static"><?php echo $row["file_no"]; ?></p>
-                    </div>
-					<div class="form-group">
-                        <label>Article Date</label>
-                        <p class="form-control-static"><?php echo $row["article_date"]; ?></p>
-                    </div>
-					<div class="form-group">
-                        <label>Article time</label>
-                        <p class="form-control-static"><?php echo $row["article_time"]; ?></p>
-                    </div>
-					<div class="form-group">
-                        <label>Article Date</label>
-                        <p class="form-control-static"><?php echo $row["article_date"]; ?></p>
-                    </div>
-					<div class="form-group">
-                        <label>Article Disposal</label>
-                        <p class="form-control-static"><?php echo $row["article_disposal"]; ?></p>
+                        <label>Article Reciever</label>
+                        <p class="form-control-static"><?php echo $row["article_receiver"]; ?></p>
                     </div>
 					
                     <p><a href="article_index.php" class="btn btn-primary">Back</a></p>

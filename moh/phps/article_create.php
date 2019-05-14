@@ -10,15 +10,15 @@ $query_error = "";
 if($_SERVER["REQUEST_METHOD"] == "POST"){
 	
 	// Validate serial_no
-    $input_serial_no = trim($_POST["serial_no"]);
-    if(empty($input_serial_no)){
-        $serial_no_err = "Please enter serial no.";     
+    $input_article_no = trim($_POST["article_no"]);
+    if(empty($input_article_no)){
+        $article_no_err = "Please enter article no.";     
     } 
 	//elseif(!filter_var($input_serial_no, FILTER_VALIDATE_REGEXP, array("options"=>array("regexp"=>"/^[a-zA-Z\s]+$/")))){
       //  $serial_no_err = "Please enter a valid id.";
 	//}
 	else{
-        $serial_no = $input_serial_no;
+        $article_no = $input_article_no;
     }
 	
     // Validate file_no
@@ -81,8 +81,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 		){
          //Prepare an insert statement
         $sql = "INSERT INTO article (article_no, article_date, article_type, article_subject, article_sender, article_receiver) 
-		VALUES (".$article_no.",'".$article_date."','".$article_type."','".$article_subject."','".$article_sender."','".$article_receiver."')";
-        
+		VALUES (".$article_no.",'".$article_date."','".$article_type."','".$article_subject."',".$article_sender.",".$article_receiver.")";
+       
 		// $conn->query($sql);
             if($res=$conn->query($sql)){
                 // Records created successfully. Redirect to landing page
@@ -131,7 +131,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                         </div>
 					   <div class="form-group" <?php echo (!empty($article_type_err)) ? 'has-error' : ''; ?>"> 
                             <label>Article Type</label>
-                            <select name='articletype' class="form-control" value="<?php echo $article_type; ?>">
+                            <select name='article_type' class="form-control" value="<?php echo $article_type; ?>">
 							    <option value="Application"> Applicaiton</option>
 								<option value="LetterResponse"> Letter Response </option>
 								<option value="InformationRequested"> Information Requested</option>
@@ -169,7 +169,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                         </div>
                         <div class="form-group" <?php echo (!empty($article_receiver_err)) ? 'has-error' : ''; ?>"> 
                             <label>Reveiver</label>
-                            <select name='article_sender' class="form-control <?php echo (!empty($article_sender_err)) ? 'has-error' : ''; ?>">
+                            <select name='article_receiver' class="form-control <?php echo (!empty($article_receiver_err)) ? 'has-error' : ''; ?>">
 							<?php
 							$sql="select person_id from employee";
 							$res=$conn->query($sql);

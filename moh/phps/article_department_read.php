@@ -1,13 +1,13 @@
 <?php
 // Check existence of id parameter before processing further
 $row="";
-if(isset($_GET["serial_no"]) && !empty(trim($_GET["serial_no"]))){
+if(isset($_GET["article_no"]) && !empty(trim($_GET["article_no"]))){
     // Include config file
     require_once "config.php";
     
     // Prepare a select statement
-	$serial_no=$_GET["serial_no"];
-    $sql = "SELECT * FROM article_department WHERE serial_no = ".$serial_no;
+	$article_no=$_GET["article_no"];
+    $sql = "SELECT * FROM article_department WHERE article_no = ".$article_no;
     $res=$conn->query($sql);
 	$row = $res->fetch_assoc();
     if($res->num_rows == 1){

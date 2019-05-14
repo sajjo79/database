@@ -35,10 +35,10 @@
                     </div>
                     <?php
                     // Include config file
-                    require_once "config.php";
+                    require_once "config_main.php";
                     
                     // Attempt select query execution
-                    $sql = "SELECT * FROM article order by serial_no";
+                    $sql = "SELECT * FROM article order by article_no";
 					$res=$conn->query($sql);
 					$tablestr="";
 					if($res->num_rows>0) {  //$mystr=$mystr." world";
@@ -46,30 +46,30 @@
                                 $tablestr.= "<thead>";
                                     $tablestr.="<tr>";
                            
-                                        $tablestr.="<th>serial_no</th>";
-                                        $tablestr.="<th>file_no</th>";
-										$tablestr.="<th>article_date</th>";
-										$tablestr.="<th>article_time</th>";
-										$tablestr.="<th>article_subject</th>";
-										$tablestr.="<th>article_disposal</th>";
+                                        $tablestr.="<th>Article No</th>";
+										$tablestr.="<th>Date</th>";
+										$tablestr.="<th>Type</th>";
+										$tablestr.="<th>Subject</th>";
+                                        $tablestr.="<th>Sender</th>";
+                                        $tablestr.="<th>Receiver</th>";
  										$tablestr.="<th>Actions</th>";
                                     $tablestr.="</tr>";
                                 $tablestr.="</thead>";
                                 $tablestr.="<tbody>";
                                 while($row = $res->fetch_assoc()){
                                     $tablestr.= "<tr>";
-                                        $tablestr.="<td>" .  $row['serial_no'] . "</td>";
-                                        $tablestr.= "<td>" . $row['file_no'] . "</td>";
+                                        $tablestr.="<td>" .  $row['article_no'] . "</td>";
 										$tablestr.= "<td>" . $row['article_date'] . "</td>";
-										$tablestr.= "<td>" . $row['article_time'] . "</td>";
+										$tablestr.= "<td>" . $row['article_type'] . "</td>";
 										$tablestr.= "<td>" . $row['article_subject'] . "</td>";
-										$tablestr.= "<td>" . $row['article_disposal'] . "</td>";
+                                        $tablestr.= "<td>" . $row['article_sender'] . "</td>";
+                                        $tablestr.= "<td>" . $row['article_receiver'] . "</td>";
 										
                                         
                                         $tablestr.="<td>";
-                                            $tablestr.="<a href='article_read.php?serial_no=". $row['serial_no'] ."' title='View Record' data-toggle='tooltip'><span class='glyphicon glyphicon-eye-open'></span></a>";
-                                            $tablestr.= "<a href='article_update.php?serial_no=". $row['serial_no'] ."' title='Update Record' data-toggle='tooltip'><span class='glyphicon glyphicon-pencil'></span></a>";
-                                            $tablestr.= "<a href='article_delete.php?serial_no=". $row['serial_no'] ."' title='Delete Record' data-toggle='tooltip'><span class='glyphicon glyphicon-trash'></span></a>";
+                                            $tablestr.="<a href='article_read.php?article_no=". $row['article_no'] ."' title='View Record' data-toggle='tooltip'><span class='glyphicon glyphicon-eye-open'></span></a>";
+                                            $tablestr.= "<a href='article_update.php?article_no=". $row['article_no'] ."' title='Update Record' data-toggle='tooltip'><span class='glyphicon glyphicon-pencil'></span></a>";
+                                            $tablestr.= "<a href='article_delete.php?article_no=". $row['article_no'] ."' title='Delete Record' data-toggle='tooltip'><span class='glyphicon glyphicon-trash'></span></a>";
                                         $tablestr.= "</td>";
                                     $tablestr.= "</tr>";
                                 }

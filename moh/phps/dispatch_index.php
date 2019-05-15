@@ -31,11 +31,12 @@
                 <div class="col-md-12">
                     <div class="page-header clearfix">
                         <h2 class="pull-left">Dispatch Details</h2>
-                        <a href="create.php" class="btn btn-success pull-right">Add New Entity</a>
+                        <a href="dispatch_create.php" class="btn btn-success pull-right">Add New Entity</a>
+                        <a href="..\index.php" class="btn btn-success pull-right">Back to Main</a>
                     </div>
                     <?php
                     // Include config file
-                    require_once "config.php";
+                    require_once "config_main.php";
                     
                     // Attempt select query execution
                     $sql = "SELECT * FROM dispatch_info order by dispatch_id";
@@ -46,11 +47,11 @@
                                 $tablestr.= "<thead>";
                                     $tablestr.="<tr>";
                                         
-                                        $tablestr.="<th>dispatch_id</th>";
-                                        $tablestr.="<th>person_id</th>"; 
+                                        $tablestr.="<th>Dispatch_id</th>";
+                                        $tablestr.="<th>article_no</th>"; 
                                         $tablestr.="<th>dispatch_date</th>";  
-                                        $tablestr.="<th>dispatch_time</th>";
-									    $tablestr.="<th>dispatched_by</th>";
+                                        $tablestr.="<th>Dispatcher ID</th>";
+									    $tablestr.="<th>Forwarded To</th>";
                                         $tablestr.="<th>Actions</th>";  									   
                                     $tablestr.="</tr>";
                                 $tablestr.="</thead>";
@@ -58,14 +59,14 @@
                                 while($row = $res->fetch_assoc()){
                                     $tablestr.= "<tr>";
 									$tablestr.="<td>" . $row['dispatch_id'] . "</td>";
-                                        $tablestr.="<td>" . $row['person_id'] . "</td>";
+                                        $tablestr.="<td>" . $row['article_no'] . "</td>";
                                         $tablestr.= "<td>" . $row['dispatch_date'] . "</td>";
-                                        $tablestr.= "<td>" . $row['dispatch_time'] . "</td>";
-                                        $tablestr.= "<td>" . $row['dispatched_by'] . "</td>";
+                                        $tablestr.= "<td>" . $row['dispatcher_id'] . "</td>";
+                                        $tablestr.= "<td>" . $row['forwarded_to'] . "</td>";
                                         $tablestr.="<td>";
                                             $tablestr.="<a href='dispatch_read.php?dispatch_id=". $row['dispatch_id'] ."' title='View Record' data-toggle='tooltip'><span class='glyphicon glyphicon-eye-open'></span></a>";
-                                            $tablestr.= "<a href='dispacth_update.php?dispatch_id=". $row['dispatch_id'] ."' title='Update Record' data-toggle='tooltip'><span class='glyphicon glyphicon-pencil'></span></a>";
-                                            $tablestr.= "<a href='dispacth_delete.php?dispatch_id=". $row['dispatch_id'] ."' title='Delete Record' data-toggle='tooltip'><span class='glyphicon glyphicon-trash'></span></a>";
+                                            $tablestr.= "<a href='dispatch_update.php?dispatch_id=". $row['dispatch_id'] ."' title='Update Record' data-toggle='tooltip'><span class='glyphicon glyphicon-pencil'></span></a>";
+                                            $tablestr.= "<a href='dispatch_delete.php?dispatch_id=". $row['dispatch_id'] ."' title='Delete Record' data-toggle='tooltip'><span class='glyphicon glyphicon-trash'></span></a>";
                                         $tablestr.= "</td>";
                                     $tablestr.= "</tr>";
                                 }

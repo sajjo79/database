@@ -1,23 +1,27 @@
 <?php
 // Include config file
-require_once "config.php";
-
+require_once "config_main.php";
+    $dispatch_id="";
+	$article_no="";
+	$dispatch_date="";
+	$dispatcher_id="";
+	$forwarded_to="";
+    
 if(isset($_POST["dispatch_id"]) && !empty(trim($_POST["dispatch_id"])))
 {
 	$dispatch_id=$_POST["dispatch_id"];
-	$person_id=$_POST["person_id"];
+	$article_no=$_POST["article_no"];
 	$dispatch_date=$_POST["dispatch_date"];
-	$dispatch_time=$_POST["distach_time"];
-	$dispacthed_by=$_POST["dispacthed_by"];
+	$dispatcher_id=$_POST["dispatcher_id"];
+	$forwarded_to=$_POST["forwarded_to"];
+	//echo $dispatch_id."-".$article_no."-".$dispatch_date."-".$dispatcher_id."-".$forwarded_to;
 	
-	
-    $sql = "UPDATE dispatched_info SET 
-	
-	dispatch_date='".$dispatch_date."',
-	person_id='"$person_id"',
-	dispatch_time='".$dispatch_time."',
-	dispatched_by='".$dispatched_by."'	
-	WHERE dispatch_id=".$dispatch_id;
+    $sql = "UPDATE dispatch_info SET 
+        article_no='".$article_no."',
+        dispatch_date='".$dispatch_date."',
+        dispatcher_id='".$dispatcher_id."',
+        forwarded_to='".$forwarded_to."'	
+        WHERE dispatch_id=".$dispatch_id;
 	//echo $sql;
     if($conn->query($sql)==TRUE)
 		
@@ -41,12 +45,12 @@ elseif(isset($_GET["dispatch_id"]) && !empty(trim($_GET["dispatch_id"]))){
     $res=$conn->query($sql);
 	$row = $res->fetch_assoc();
     if($res->num_rows == 1){
-                $dispatch_id=$row["dispatch_id"];
-				$person_id=$row["person_id"];
-	            $dispatch_date=$row["dispatch_date"];
-			    $dispatch_time=$row["dispatch_time"];
-	            $dispatched_by=$row["dispatched_by"];
-	            
+        $dispatch_id=$row["dispatch_id"];
+        $article_no=$row["article_no"];
+        $dispatch_date=$row["dispatch_date"];
+        $dispatcher_id=$row["dispatcher_id"];
+        $forwarded_to=$row["forwarded_to"];
+        //echo $dispatch_id."-".$article_no."-".$dispatch_date."-".$dispatcher_id."-".$forwarded_to;       
             } else{
                 // URL doesn't contain valid id parameter. Redirect to error page
                 header("location: dispacth_error.php");
@@ -83,24 +87,24 @@ elseif(isset($_GET["dispatch_id"]) && !empty(trim($_GET["dispatch_id"]))){
                             <input type="text" name="dispatch_id" class="form-control" value="<?php echo $dispatch_id; ?>">
 
                         </div>
-						<div class="form-group <?php echo (!empty($person_id_err)) ? 'has-error' : ''; ?>">
-                            <label>Person id</label>
-                            <input type="text" name="person_id" class="form-control" value="<?php echo $person_id; ?>">
+						<div class="form-group <?php echo (!empty($article_no_err)) ? 'has-error' : ''; ?>">
+                            <label>Article No</label>
+                            <input type="text" name="article_no" class="form-control" value="<?php echo $article_no; ?>">
 
                         </div>
 						<div class="form-group <?php echo (!empty($dispatch_date_err)) ? 'has-error' : ''; ?>">
                             <label>Dispatch date</label>
-                            <input type="text" name="dispatch_date" class="form-control" value="<?php echo $dispatch_date; ?>">
+                            <input type="date" name="dispatch_date" class="form-control" value="<?php echo $dispatch_date ?>">
 
                         </div>
-						<div class="form-group <?php echo (!empty($dispatch_time_err)) ? 'has-error' : ''; ?>">
-                            <label>Dispatch time</label>
-                            <input type="text" name="dispatch_time" class="form-control" value="<?php echo $dispatch_time; ?>">
+						<div class="form-group <?php echo (!empty($dispatcher_id_err)) ? 'has-error' : ''; ?>">
+                            <label>Dispatcher ID</label>
+                            <input type="text" name="dispatcher_id" class="form-control" value="<?php echo $dispatcher_id; ?>">
 
                         </div>
-                       <div class="form-group <?php echo (!empty($dispatched_by_err)) ? 'has-error' : ''; ?>">
-                            <label>Dispatched by</label>
-                            <input type="text" name="dispatched_by" class="form-control" value="<?php echo $dispatched_by; ?>">
+                       <div class="form-group <?php echo (!empty($forwarded_to_err)) ? 'has-error' : ''; ?>">
+                            <label>Forwarded To</label>
+                            <input type="text" name="forwarded_to" class="form-control" value="<?php echo $forwarded_to; ?>">
 
                         </div>
 						

@@ -3,7 +3,7 @@
 $row="";
 if(isset($_GET["dispatch_id"]) && !empty(trim($_GET["dispatch_id"]))){
     // Include config file
-    require_once "config.php";
+    require_once "config_main.php";
     
     // Prepare a select statement
 	$dispatch_id=$_GET["dispatch_id"];
@@ -13,7 +13,9 @@ if(isset($_GET["dispatch_id"]) && !empty(trim($_GET["dispatch_id"]))){
 
     // Close connection
     $conn->close();
+    
 } 
 ?>
+<a href="dispatch_index.php" class="btn btn-success pull-right">Back</a>
 </body>
 </html>

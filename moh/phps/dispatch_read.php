@@ -3,7 +3,7 @@
 $row="";
 if(isset($_GET["dispatch_id"]) && !empty(trim($_GET["dispatch_id"]))){
     // Include teamconfig file
-    require_once "config.php";
+    require_once "config_main.php";
     echo $_GET["dispatch_id"];
     // Prepare a select statement
 	$dispatch_id=$_GET["dispatch_id"];
@@ -12,10 +12,10 @@ if(isset($_GET["dispatch_id"]) && !empty(trim($_GET["dispatch_id"]))){
 	$row = $res->fetch_assoc();
     if($res->num_rows == 1){
                 $dispatch_id = $row["dispatch_id"]; 
-				$person_id = $row["person_id"];
+				$person_id = $row["article_no"];
                 $dispatch_date = $row["dispatch_date"];
-				$disptach_time = $row["dispatch_time"];
-				$dispatched_by = $row["dispatched_by"];
+				$disptach_time = $row["dispatcher_id"];
+				$dispatched_by = $row["forwarded_to"];
 			
 			
 					
@@ -57,6 +57,11 @@ if(isset($_GET["dispatch_id"]) && !empty(trim($_GET["dispatch_id"]))){
                         <label>Dispatch id</label>
                         <p class="form-control-static"><?php echo $row["dispatch_id"]; ?></p>
                     </div>
+
+                    <div class="form-group">
+                        <label>Article No.</label>
+                        <p class="form-control-static"><?php echo $row["article_no"]; ?></p>
+                    </div>
                     
                     <div class="form-group">
                         <label>Dispatch date</label>
@@ -64,16 +69,16 @@ if(isset($_GET["dispatch_id"]) && !empty(trim($_GET["dispatch_id"]))){
                     </div>
 					
 					<div class="form-group">
-                        <label>Dispatch time</label>
-                        <p class="form-control-static"><?php echo $row["dispstch_time"]; ?></p>
+                        <label>Dispatcher Id</label>
+                        <p class="form-control-static"><?php echo $row["dispatcher_id"]; ?></p>
                     </div>
 					<div class="form-group">
-                        <label>Dispatched by</label>
-                        <p class="form-control-static"><?php echo $row["dispatched_by"]; ?></p>
+                        <label>Forwarded To</label>
+                        <p class="form-control-static"><?php echo $row["forwarded_to"]; ?></p>
                     </div>
 					
 					
-                    <p><a href="dipatched_index.php" class="btn btn-primary">Back</a></p>
+                    <p><a href="dispatch_index.php" class="btn btn-primary">Back</a></p>
                 </div>
             </div>        
         </div>

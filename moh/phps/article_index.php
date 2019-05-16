@@ -32,6 +32,7 @@
                     <div class="page-header clearfix">
                         <h2 class="pull-left">Article Details</h2>
                         <a href="article_create.php" class="btn btn-success pull-right">Add New Entity</a>
+                        <a href="../index.php" class="btn btn-success pull-right">Back to Main</a>
                     </div>
                     <?php
                     // Include config file
